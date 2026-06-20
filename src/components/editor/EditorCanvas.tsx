@@ -160,7 +160,7 @@ export function EditorCanvas({ previewMode }: Props) {
             height: canvasHeight ? `${canvasHeight * zoomScale}px` : 'auto',
             transition: 'width 150ms ease-out, height 150ms ease-out',
           }}
-          className="shrink-0 flex justify-center items-start overflow-hidden rounded-2xl mx-auto"
+          className="shrink-0 flex justify-start items-start overflow-hidden rounded-2xl mx-auto"
         >
           {/* Scaled Inner Canvas */}
           <div 
