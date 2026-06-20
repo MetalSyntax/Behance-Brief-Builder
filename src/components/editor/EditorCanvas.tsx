@@ -147,7 +147,7 @@ export function EditorCanvas({ previewMode }: Props) {
       {/* Outer Scroll Container */}
       <div 
         ref={containerRef}
-        className="flex-1 overflow-y-auto overflow-x-auto p-3 lg:p-6 flex items-start custom-scrollbar"
+        className="flex-1 overflow-y-auto overflow-x-hidden p-3 lg:p-6 flex items-start custom-scrollbar"
         onClick={() => !previewMode && setActiveSectionId(null)}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
