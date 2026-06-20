@@ -53,7 +53,7 @@ export function EditableText({
       onKeyDown={handleKeyDown}
       className={`${className} ${
         isEditing 
-          ? 'focus:outline-violet-500 focus:bg-white/5 transition-all p-1 -m-1 rounded cursor-text' 
+          ? 'focus:outline-violet-500 focus:bg-white/5 transition-all p-1 -m-1 rounded cursor-text select-text' 
           : ''
       }`}
       style={style}
