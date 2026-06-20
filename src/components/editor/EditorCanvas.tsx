@@ -44,6 +44,37 @@ export function EditorCanvas({ previewMode }: Props) {
     }
   }, [zoomMode, project.sections.length, previewMode])
 
+  const [touchStartDist, setTouchStartDist] = useState<number | null>(null)
+  const [initialScale, setInitialScale] = useState<number>(1)
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (e.touches.length === 2) {
+      const dist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      )
+      setTouchStartDist(dist)
+      setInitialScale(zoomScale)
+      setZoomMode('custom')
+    }
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (e.touches.length === 2 && touchStartDist !== null) {
+      const dist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      )
+      const factor = dist / touchStartDist
+      const newScale = Math.min(1.5, Math.max(0.2, initialScale * factor))
+      setZoomScale(newScale)
+    }
+  }
+
+  const handleTouchEnd = () => {
+    setTouchStartDist(null)
+  }
+
   const sortedSections = [...project.sections].sort((a, b) => a.order - b.order)
 
   return (
@@ -96,6 +127,9 @@ export function EditorCanvas({ previewMode }: Props) {
         ref={containerRef}
         className="flex-1 overflow-auto p-6 flex justify-center items-start custom-scrollbar"
         onClick={() => !previewMode && setActiveSectionId(null)}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
       >
         {/* Scaled Inner Wrapper */}
         <div 
