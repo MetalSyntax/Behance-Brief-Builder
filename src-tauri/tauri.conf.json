@@ -1,8 +1,8 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
-  "productName": "Behance Brief Builder",
+  "productName": "BeBrief Studio",
   "version": "1.0.0",
-  "identifier": "com.metalsyntax.behancebriefbuilder",
+  "identifier": "com.metalsyntax.bebriefstudio",
   "build": {
     "frontendDist": "../dist",
     "devUrl": "http://localhost:5173",
@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "Behance Brief Builder",
+        "title": "BeBrief Studio",
         "width": 1280,
         "height": 800,
         "resizable": true,

@@ -1,4 +1,4 @@
-describe('Behance Brief Builder E2E Tests', () => {
+describe('BeBrief Studio E2E Tests', () => {
   beforeEach(() => {
     // Visit Dashboard
     cy.visit('/')

@@ -1,4 +1,4 @@
-# 🎨 Behance Brief Builder
+# 🎨 BeBrief Studio
 
 A premium, interactive web application designed to help designers structure, prototype, and build stunning Case Study Briefs for Behance. Craft sections, customize color palettes, modify metrics, and export everything directly to standalone HTML, PDF, or high-resolution images.
 

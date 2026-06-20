@@ -56,7 +56,7 @@ export function Dashboard() {
             className="w-8 h-8 rounded-lg shadow-lg shadow-violet-500/20 object-cover"
           />
           <div>
-            <span className="text-[10px] text-zinc-500 font-mono tracking-wider uppercase block">Behance Brief Builder</span>
+            <span className="text-[10px] text-zinc-500 font-mono tracking-wider uppercase block">BeBrief Studio</span>
             <h1 className="text-sm font-semibold text-white tracking-tight leading-none m-0 p-0">
               {t('dashboard.savedProjects', { defaultValue: 'Proyectos Guardados' })}
             </h1>
@@ -183,7 +183,7 @@ export function Dashboard() {
 
       {/* Footer */}
       <footer className="border-t border-white/5 py-6 text-center text-xs text-zinc-600 shrink-0" dangerouslySetInnerHTML={{
-        __html: t('dashboard.footer', { defaultValue: 'Behance Brief Builder &copy; 2026 · Edición modular y exportación standalone.' })
+        __html: t('dashboard.footer', { defaultValue: 'BeBrief Studio &copy; 2026 · Edición modular y exportación standalone.' })
       }} />
     </div>
   )

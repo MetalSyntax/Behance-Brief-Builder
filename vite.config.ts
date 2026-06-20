@@ -13,8 +13,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
       manifest: {
-        name: 'Behance Brief Builder',
-        short_name: 'BehanceBrief',
+        name: 'BeBrief Studio',
+        short_name: 'BeBrief',
         description: 'Creador modular de briefs de diseño para Behance',
         theme_color: '#0e0e11',
         background_color: '#0e0e11',

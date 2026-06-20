@@ -1,6 +1,6 @@
 {
   "toolbar": {
-    "appName": "Behance Brief Builder",
+    "appName": "BeBrief Studio",
     "theme": "Tema",
     "preview": "Vista Previa",
     "edit": "Editar",
@@ -89,7 +89,7 @@
     "subtitle": "Diseña la estructura de tu caso de estudio de Behance de forma modular. Personaliza colores, fuentes y contenidos, y expórtalo a HTML o PDF standalone.",
     "createFromTemplate": "Crear desde Plantilla",
     "myStudies": "Mis Case Studies ({{count}})",
-    "footer": "Behance Brief Builder &copy; 2026 · Edición modular y exportación standalone.",
+    "footer": "BeBrief Studio &copy; 2026 · Edición modular y exportación standalone.",
     "badgeFeatured": "Destacado",
     "badgeClean": "Limpio",
     "badgeTech": "Tech",
