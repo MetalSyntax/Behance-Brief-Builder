@@ -813,7 +813,7 @@ export function SectionInspector() {
   )
 
   return (
-    <aside className="w-80 bg-[#13131a] border-l border-white/5 flex flex-col h-full z-20 shrink-0">
+    <aside className="w-full lg:w-80 bg-[#13131a] border-l border-white/5 flex flex-col h-full z-20 shrink-0">
       {/* Sidebar Tabs */}
       <div className="flex border-b border-white/5 shrink-0 bg-[#0e0e11]">
         <button

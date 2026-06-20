@@ -3,6 +3,7 @@ import {
   closestCenter,
   KeyboardSensor,
   PointerSensor,
+  TouchSensor,
   useSensor,
   useSensors,
   type DragEndEvent
@@ -137,6 +138,12 @@ export function SectionList() {
         distance: 8,
       },
     }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 250,
+        tolerance: 5,
+      },
+    }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     })
@@ -166,7 +173,7 @@ export function SectionList() {
   ]
 
   return (
-    <aside className="w-80 bg-[#13131a] border-r border-white/5 flex flex-col h-full z-20 shrink-0">
+    <aside className="w-full lg:w-80 bg-[#13131a] border-r border-white/5 flex flex-col h-full z-20 shrink-0">
       <div className="p-4 border-b border-white/5 shrink-0">
         <h2 className="text-xs font-mono font-bold tracking-wider uppercase text-zinc-500">
           {t('sidebar.sections')}
