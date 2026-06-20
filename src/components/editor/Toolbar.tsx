@@ -39,9 +39,11 @@ export function Toolbar({ previewMode, setPreviewMode, onExportHTML, onCopyHTML,
           <Home size={14} />
         </button>
         
-        <div className="w-8 h-8 rounded-lg bg-violet-600 flex items-center justify-center font-bold text-white shadow-lg shadow-violet-500/20 shrink-0">
-          B
-        </div>
+        <img
+          src="/favicon.png"
+          alt="Logo"
+          className="w-8 h-8 rounded-lg shadow-lg shadow-violet-500/20 object-cover shrink-0"
+        />
         
         <div className="flex flex-col">
           <span className="text-[10px] text-zinc-500 font-mono tracking-wider uppercase block">{t('toolbar.appName')}</span>

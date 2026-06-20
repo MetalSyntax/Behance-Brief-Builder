@@ -50,9 +50,11 @@ export function Dashboard() {
       {/* Upper header */}
       <header className="h-16 border-b border-white/5 bg-[#13131a] px-8 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-violet-600 flex items-center justify-center font-bold text-white shadow-lg shadow-violet-500/20">
-            B
-          </div>
+          <img
+            src="/favicon.png"
+            alt="Logo"
+            className="w-8 h-8 rounded-lg shadow-lg shadow-violet-500/20 object-cover"
+          />
           <div>
             <span className="text-[10px] text-zinc-500 font-mono tracking-wider uppercase block">Behance Brief Builder</span>
             <h1 className="text-sm font-semibold text-white tracking-tight leading-none m-0 p-0">
