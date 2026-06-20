@@ -11,6 +11,8 @@ function App() {
   const [previewMode, setPreviewMode] = useState(false)
   const { project, view } = useProjectStore()
 
+  const [activeMobileTab, setActiveMobileTab] = useState<'canvas' | 'sections' | 'inspector'>('canvas')
+
   if (view === 'dashboard') {
     return <Dashboard />
   }
@@ -49,7 +51,6 @@ function App() {
     }
   }
 
-  const [activeMobileTab, setActiveMobileTab] = useState<'canvas' | 'sections' | 'inspector'>('canvas')
 
   return (
     <div className="h-screen w-screen flex flex-col bg-[#0e0e11] text-zinc-100 overflow-hidden font-sans select-none">
