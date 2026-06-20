@@ -6,6 +6,8 @@ import { SectionInspector } from './components/editor/SectionInspector'
 import { useProjectStore } from './lib/store/projectStore'
 import { exportProjectToHTML } from './lib/export/htmlExporter'
 import { Dashboard } from './components/dashboard/Dashboard'
+import { save } from '@tauri-apps/plugin-dialog'
+import { writeTextFile } from '@tauri-apps/plugin-fs'
 
 function App() {
   const [previewMode, setPreviewMode] = useState(false)
@@ -17,27 +19,50 @@ function App() {
     return <Dashboard />
   }
 
-  const handleExportHTML = () => {
+  const handleExportHTML = async () => {
     try {
       const htmlContent = exportProjectToHTML(project)
-      const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8;' })
-      const url = URL.createObjectURL(blob)
-      
-      const link = document.createElement('a')
-      link.href = url
-      // Normalize project title to safe filename
-      const safeTitle = project.title
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/(^-|-$)+/g, '') || 'case-study'
-      
-      link.setAttribute('download', `${safeTitle}-behance-brief.html`)
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-      URL.revokeObjectURL(url)
+      const isTauri = typeof window !== 'undefined' && (window as any).__TAURI_INTERNALS__ !== undefined
+
+      if (isTauri) {
+        const safeTitle = project.title
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/(^-|-$)+/g, '') || 'case-study'
+
+        const filePath = await save({
+          filters: [{
+            name: 'HTML Document',
+            extensions: ['html']
+          }],
+          defaultPath: `${safeTitle}-behance-brief.html`
+        })
+
+        if (filePath) {
+          await writeTextFile(filePath, htmlContent)
+          alert('¡Archivo guardado con éxito!')
+        }
+      } else {
+        const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8;' })
+        const url = URL.createObjectURL(blob)
+        
+        const link = document.createElement('a')
+        link.href = url
+        // Normalize project title to safe filename
+        const safeTitle = project.title
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/(^-|-$)+/g, '') || 'case-study'
+        
+        link.setAttribute('download', `${safeTitle}-behance-brief.html`)
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+        URL.revokeObjectURL(url)
+      }
     } catch (error) {
       console.error('Error exporting HTML:', error)
+      alert('Hubo un error al exportar el archivo HTML.')
     }
   }
   const handleCopyHTML = () => {
