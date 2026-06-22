@@ -3,6 +3,8 @@ import { useProjectStore } from '../../lib/store/projectStore'
 import { EditableText } from '../ui/EditableText'
 import { Upload, X } from 'lucide-react'
 
+import { getTitleClass, getSubtitleClass, getAlignmentContainerClass, getTextAlignClass, getCardRadiusStyle } from '../../lib/utils/styleMapper'
+
 interface Props {
   section: Section & { data: MockupsData }
   isEditing: boolean
@@ -67,40 +69,38 @@ export function MockupsSection({ section, isEditing, onClick }: Props) {
       } cursor-pointer`}
     >
       <div className="max-w-[1120px] mx-auto w-full px-6">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
-          <div>
-            <div className="flex items-center gap-3 mb-2">
-              {data.sectionNumber && (
-                <EditableText
-                  value={data.sectionNumber}
-                  onChange={(val) => handleUpdate('sectionNumber', val)}
-                  isEditing={isEditing}
-                  tagName="span"
-                  className="font-mono text-sm opacity-60 bg-white/5 border border-white/10 px-2 py-0.5 rounded"
-                />
-              )}
-              
+        <div className={`mb-12 ${getTextAlignClass(style.textAlign)}`}>
+          <div className={`${getAlignmentContainerClass(style.textAlign)} mb-2`}>
+            {data.sectionNumber && (
               <EditableText
-                value={data.title}
-                onChange={(val) => handleUpdate('title', val)}
+                value={data.sectionNumber}
+                onChange={(val) => handleUpdate('sectionNumber', val)}
                 isEditing={isEditing}
-                tagName="h2"
-                className="text-2xl font-bold tracking-tight uppercase"
-                style={{ fontFamily: 'var(--font-display)' }}
-              />
-            </div>
-            
-            {data.description !== undefined && (
-              <EditableText
-                value={data.description}
-                onChange={(val) => handleUpdate('description', val)}
-                isEditing={isEditing}
-                tagName="p"
-                className="opacity-75 max-w-2xl text-sm"
-                style={{ fontFamily: 'var(--font-body)' }}
+                tagName="span"
+                className="font-mono text-sm opacity-60 bg-white/5 border border-white/10 px-2 py-0.5 rounded"
               />
             )}
+            
+            <EditableText
+              value={data.title}
+              onChange={(val) => handleUpdate('title', val)}
+              isEditing={isEditing}
+              tagName="h2"
+              className={`${getTitleClass(style.titleSize)} ${getTextAlignClass(style.textAlign)}`}
+              style={{ fontFamily: 'var(--font-display)' }}
+            />
           </div>
+          
+          {data.description !== undefined && (
+            <EditableText
+              value={data.description}
+              onChange={(val) => handleUpdate('description', val)}
+              isEditing={isEditing}
+              tagName="p"
+              className={`${getSubtitleClass(style.subtitleSize, 'opacity-75 max-w-2xl text-sm')} ${getTextAlignClass(style.textAlign)} ${style.textAlign === 'center' ? 'mx-auto' : ''}`}
+              style={{ fontFamily: 'var(--font-body)' }}
+            />
+          )}
         </div>
 
         <div className={getLayoutClass()}>
@@ -112,7 +112,8 @@ export function MockupsSection({ section, isEditing, onClick }: Props) {
             data.mockups?.map((mock: any, index: number) => (
               <div 
                 key={index} 
-                className="group relative flex flex-col items-center justify-center bg-white/[0.02] border border-white/5 rounded-2xl overflow-hidden p-6 aspect-[4/5] hover:border-accent/20 transition-all duration-300 w-full"
+                style={getCardRadiusStyle(style.radius)}
+                className="group relative flex flex-col items-center justify-center bg-white/[0.02] border border-white/5 overflow-hidden p-6 aspect-[4/5] hover:border-accent/20 transition-all duration-300 w-full"
               >
                 {mock.image ? (
                   <div className="relative w-full h-full flex items-center justify-center">

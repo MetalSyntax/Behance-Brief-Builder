@@ -64,7 +64,12 @@ export interface SectionStyle {
   padding?: string
   width?: '1600px' | '1200px' | '100%'
   displayFont?: string
+  titleSize?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'display'
+  subtitleSize?: 'sm' | 'md' | 'lg' | 'xl' | '2xl'
+  textAlign?: 'left' | 'center'
+  radius?: '0px' | '4px' | '8px' | '12px' | '16px' | '24px'
 }
+
 
 // Data structures for core sections
 export interface CoverData {

@@ -3,6 +3,7 @@ import type { Section, ProcessData } from '../../lib/types/project.types'
 import { useProjectStore } from '../../lib/store/projectStore'
 import { EditableText } from '../ui/EditableText'
 import * as LucideIcons from 'lucide-react'
+import { getTitleClass, getAlignmentContainerClass, getTextAlignClass, getCardRadiusStyle } from '../../lib/utils/styleMapper'
 
 interface Props {
   section: Section & { data: ProcessData }
@@ -42,7 +43,7 @@ export function ProcessSection({ section, isEditing, onClick }: Props) {
         style={{ maxWidth: style.width || '1600px' }}
         className="mx-auto px-6 lg:px-16 py-12"
       >
-        <div className="flex flex-col gap-2 mb-12">
+        <div className={`mb-12 ${getAlignmentContainerClass(style.textAlign)}`}>
           {data.sectionNumber && (
             <EditableText
               value={data.sectionNumber}
@@ -58,7 +59,7 @@ export function ProcessSection({ section, isEditing, onClick }: Props) {
             onChange={(val) => handleUpdate('title', val)}
             isEditing={isEditing}
             tagName="h2"
-            className="text-4xl md:text-5xl font-bold tracking-tight"
+            className={`${getTitleClass(style.titleSize, 'text-4xl md:text-5xl font-bold tracking-tight')} ${getTextAlignClass(style.textAlign)}`}
             style={{ fontFamily: 'var(--font-display)' }}
           />
         </div>
@@ -68,7 +69,8 @@ export function ProcessSection({ section, isEditing, onClick }: Props) {
             const IconComponent = (LucideIcons as any)[step.icon] || LucideIcons.HelpCircle
             
             return (
-              <div key={index} className="flex flex-col bg-white/[0.02] border border-white/5 rounded-2xl p-6 relative overflow-hidden group hover:border-accent/20 transition-all duration-300">
+              <div key={index} style={getCardRadiusStyle(style.radius)} className="flex flex-col bg-white/[0.02] border border-white/5 p-6 relative overflow-hidden group hover:border-accent/20 transition-all duration-300">
+
                 <div className="absolute top-4 right-4 font-mono text-4xl opacity-5 font-bold group-hover:opacity-10 transition-opacity">
                   0{index + 1}
                 </div>

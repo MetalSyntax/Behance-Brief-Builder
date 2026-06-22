@@ -2,6 +2,8 @@ import type { Section, ResultsData } from '../../lib/types/project.types'
 import { useProjectStore } from '../../lib/store/projectStore'
 import { EditableText } from '../ui/EditableText'
 
+import { getTitleClass, getSubtitleClass, getAlignmentContainerClass, getTextAlignClass, getCardRadiusStyle } from '../../lib/utils/styleMapper'
+
 interface Props {
   section: Section & { data: ResultsData }
   isEditing: boolean
@@ -36,7 +38,7 @@ export function ResultsSection({ section, isEditing, onClick }: Props) {
       } cursor-pointer`}
     >
       <div className="max-w-[1120px] mx-auto w-full px-6">
-        <div className="flex items-center gap-3 mb-12">
+        <div className={`mb-12 ${getAlignmentContainerClass(style.textAlign)}`}>
           {data.sectionNumber && (
             <EditableText
               value={data.sectionNumber}
@@ -52,26 +54,26 @@ export function ResultsSection({ section, isEditing, onClick }: Props) {
             onChange={(val) => handleUpdate('title', val)}
             isEditing={isEditing}
             tagName="h2"
-            className="text-2xl font-bold tracking-tight uppercase"
+            className={`${getTitleClass(style.titleSize)} ${getTextAlignClass(style.textAlign)}`}
             style={{ fontFamily: 'var(--font-display)' }}
           />
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-6">
+          <div className={`lg:col-span-6 ${getTextAlignClass(style.textAlign)}`}>
             <EditableText
               value={data.description}
               onChange={(val) => handleUpdate('description', val)}
               isEditing={isEditing}
               tagName="p"
-              className="text-xl leading-relaxed font-light opacity-90 whitespace-pre-line"
+              className={`${getSubtitleClass(style.subtitleSize, 'text-xl leading-relaxed font-light opacity-90')} ${getTextAlignClass(style.textAlign)} whitespace-pre-line`}
               style={{ fontFamily: 'var(--font-body)' }}
             />
           </div>
           
           <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
             {data.metrics?.map((metric: any, index: number) => (
-              <div key={index} className="flex flex-col bg-white/[0.02] border border-white/5 rounded-2xl p-6 relative overflow-hidden">
+              <div key={index} style={getCardRadiusStyle(style.radius)} className="flex flex-col bg-white/[0.02] border border-white/5 p-6 relative overflow-hidden">
                 <EditableText
                   value={metric.value}
                   onChange={(val) => handleMetricUpdate(index, 'value', val)}

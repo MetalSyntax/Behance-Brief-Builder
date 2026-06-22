@@ -3,6 +3,8 @@ import { useProjectStore } from '../../lib/store/projectStore'
 import { EditableText } from '../ui/EditableText'
 import { Upload, X } from 'lucide-react'
 
+import { getTitleClass, getSubtitleClass, getAlignmentContainerClass, getTextAlignClass, getCardRadiusStyle } from '../../lib/utils/styleMapper'
+
 interface Props {
   section: Section & { data: ProblemData }
   isEditing: boolean
@@ -42,8 +44,8 @@ export function ProblemSection({ section, isEditing, onClick }: Props) {
       } cursor-pointer`}
     >
       <div className="max-w-[1120px] mx-auto w-full px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        <div className={data.layout === 'left-image' ? 'md:order-2' : ''}>
-          <div className="flex items-center gap-3 mb-6">
+        <div className={`${data.layout === 'left-image' ? 'md:order-2' : ''} ${getTextAlignClass(style.textAlign)}`}>
+          <div className={`mb-6 ${getAlignmentContainerClass(style.textAlign)}`}>
             {data.sectionNumber && (
               <EditableText
                 value={data.sectionNumber}
@@ -59,7 +61,7 @@ export function ProblemSection({ section, isEditing, onClick }: Props) {
               onChange={(val) => handleUpdate('title', val)}
               isEditing={isEditing}
               tagName="h2"
-              className="text-2xl font-bold tracking-tight uppercase"
+              className={`${getTitleClass(style.titleSize)} ${getTextAlignClass(style.textAlign)}`}
               style={{ fontFamily: 'var(--font-display)' }}
             />
           </div>
@@ -69,12 +71,15 @@ export function ProblemSection({ section, isEditing, onClick }: Props) {
             onChange={(val) => handleUpdate('description', val)}
             isEditing={isEditing}
             tagName="p"
-            className="text-lg leading-relaxed font-light opacity-90 whitespace-pre-line"
+            className={`${getSubtitleClass(style.subtitleSize, 'text-lg leading-relaxed font-light opacity-90')} ${getTextAlignClass(style.textAlign)} whitespace-pre-line`}
             style={{ fontFamily: 'var(--font-body)' }}
           />
         </div>
         
-        <div className={`${data.layout === 'left-image' ? 'md:order-1' : ''} bg-white/[0.02] border border-white/5 rounded-2xl aspect-[4/3] flex items-center justify-center p-8 relative overflow-hidden group`}>
+        <div 
+          style={getCardRadiusStyle(style.radius)}
+          className={`${data.layout === 'left-image' ? 'md:order-1' : ''} bg-white/[0.02] border border-white/5 aspect-[4/3] flex items-center justify-center p-8 relative overflow-hidden group`}
+        >
           {data.image ? (
             <div className="relative w-full h-full flex items-center justify-center">
               <img src={data.image} alt={data.title} className="max-h-full max-w-full object-contain rounded-lg" />

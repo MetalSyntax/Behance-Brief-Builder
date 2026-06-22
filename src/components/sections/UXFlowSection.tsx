@@ -3,6 +3,8 @@ import { useProjectStore } from '../../lib/store/projectStore'
 import { EditableText } from '../ui/EditableText'
 import { Upload, X } from 'lucide-react'
 
+import { getTitleClass, getSubtitleClass, getAlignmentContainerClass, getTextAlignClass } from '../../lib/utils/styleMapper'
+
 interface Props {
   section: Section & { data: UXFlowData }
   isEditing: boolean
@@ -42,7 +44,7 @@ export function UXFlowSection({ section, isEditing, onClick }: Props) {
       } cursor-pointer`}
     >
       <div className="max-w-[1120px] mx-auto w-full px-6">
-        <div className="flex items-center gap-3 mb-12">
+        <div className={`mb-12 ${getAlignmentContainerClass(style.textAlign)}`}>
           {data.sectionNumber && (
             <EditableText
               value={data.sectionNumber}
@@ -58,7 +60,7 @@ export function UXFlowSection({ section, isEditing, onClick }: Props) {
             onChange={(val) => handleUpdate('title', val)}
             isEditing={isEditing}
             tagName="h2"
-            className="text-2xl font-bold tracking-tight uppercase"
+            className={`${getTitleClass(style.titleSize)} ${getTextAlignClass(style.textAlign)}`}
             style={{ fontFamily: 'var(--font-display)' }}
           />
         </div>
@@ -69,7 +71,7 @@ export function UXFlowSection({ section, isEditing, onClick }: Props) {
             onChange={(val) => handleUpdate('description', val)}
             isEditing={isEditing}
             tagName="p"
-            className="text-lg opacity-85 mb-8 font-light max-w-3xl"
+            className={`${getSubtitleClass(style.subtitleSize)} ${getTextAlignClass(style.textAlign)} mb-8 max-w-3xl ${style.textAlign === 'center' ? 'mx-auto' : ''}`}
             style={{ fontFamily: 'var(--font-body)' }}
           />
         )}

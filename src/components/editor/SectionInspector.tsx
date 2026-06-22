@@ -1451,6 +1451,88 @@ export function SectionInspector() {
             />
           </div>
         </div>
+
+        {/* Text Sizes Panel */}
+        <div className="p-3 bg-white/[0.01] border border-white/5 rounded-xl space-y-3">
+          <span className="text-xs text-white font-semibold block">Personalización de Textos</span>
+          
+          <div>
+            <label className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 block mb-1 uppercase">Tamaño del Título</label>
+            <CustomSelect
+              value={section.style.titleSize || 'xl'}
+              onChange={(val) => handleStyleChange('titleSize', val)}
+              options={[
+                { value: 'sm', label: 'Pequeño (xl)' },
+                { value: 'md', label: 'Mediano (2xl)' },
+                { value: 'lg', label: 'Grande (3xl)' },
+                { value: 'xl', label: 'Muy Grande (4xl/5xl)' },
+                { value: '2xl', label: 'Gigante (6xl)' },
+                { value: 'display', label: 'Display (Gigante)' }
+              ]}
+              className="w-full"
+              triggerClassName="w-full py-2 justify-between"
+              dropdownClassName="w-full"
+            />
+          </div>
+
+          <div>
+            <label className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 block mb-1 uppercase">Tamaño de Descripción/Subtítulo</label>
+            <CustomSelect
+              value={section.style.subtitleSize || 'lg'}
+              onChange={(val) => handleStyleChange('subtitleSize', val)}
+              options={[
+                { value: 'sm', label: 'Pequeño (sm)' },
+                { value: 'md', label: 'Mediano (base)' },
+                { value: 'lg', label: 'Grande (lg)' },
+                { value: 'xl', label: 'Muy Grande (xl)' },
+                { value: '2xl', label: 'Destacado (2xl)' }
+              ]}
+              className="w-full"
+              triggerClassName="w-full py-2 justify-between"
+              dropdownClassName="w-full"
+            />
+          </div>
+
+          <div>
+            <label className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 block mb-1 uppercase">Alineación de Encabezados</label>
+            <CustomSelect
+              value={section.style.textAlign || 'left'}
+              onChange={(val) => handleStyleChange('textAlign', val)}
+              options={[
+                { value: 'left', label: 'Izquierda' },
+                { value: 'center', label: 'Centrado' }
+              ]}
+              className="w-full"
+              triggerClassName="w-full py-2 justify-between"
+              dropdownClassName="w-full"
+            />
+          </div>
+        </div>
+
+        {/* Elements Panel */}
+        <div className="p-3 bg-white/[0.01] border border-white/5 rounded-xl space-y-3">
+          <span className="text-xs text-white font-semibold block">Redondeado de Tarjetas/Grillas</span>
+
+          <div>
+            <label className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 block mb-1 uppercase">Redondeado de Bordes (Radius)</label>
+            <CustomSelect
+              value={section.style.radius || '12px'}
+              onChange={(val) => handleStyleChange('radius', val)}
+              options={[
+                { value: '0px', label: '0px (Recto)' },
+                { value: '4px', label: '4px (Suave)' },
+                { value: '8px', label: '8px (Regular)' },
+                { value: '12px', label: '12px (Redondeado)' },
+                { value: '16px', label: '16px (Grande)' },
+                { value: '24px', label: '24px (Píldora)' }
+              ]}
+              className="w-full"
+              triggerClassName="w-full py-2 justify-between"
+              dropdownClassName="w-full"
+            />
+          </div>
+        </div>
+
       </div>
     )
   }

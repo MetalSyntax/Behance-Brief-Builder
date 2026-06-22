@@ -2,6 +2,8 @@ import type { Section, ColorPaletteData } from '../../lib/types/project.types'
 import { useProjectStore } from '../../lib/store/projectStore'
 import { EditableText } from '../ui/EditableText'
 
+import { getTitleClass, getAlignmentContainerClass, getTextAlignClass, getCardRadiusStyle } from '../../lib/utils/styleMapper'
+
 interface Props {
   section: Section & { data: ColorPaletteData }
   isEditing: boolean
@@ -36,7 +38,7 @@ export function ColorPaletteSection({ section, isEditing, onClick }: Props) {
       } cursor-pointer`}
     >
       <div className="max-w-[1120px] mx-auto w-full px-6">
-        <div className="flex items-center gap-3 mb-12">
+        <div className={`mb-12 ${getAlignmentContainerClass(style.textAlign)}`}>
           {data.sectionNumber && (
             <EditableText
               value={data.sectionNumber}
@@ -52,7 +54,7 @@ export function ColorPaletteSection({ section, isEditing, onClick }: Props) {
             onChange={(val) => handleUpdate('title', val)}
             isEditing={isEditing}
             tagName="h2"
-            className="text-2xl font-bold tracking-tight uppercase"
+            className={`${getTitleClass(style.titleSize)} ${getTextAlignClass(style.textAlign)}`}
             style={{ fontFamily: 'var(--font-display)' }}
           />
         </div>
@@ -62,10 +64,13 @@ export function ColorPaletteSection({ section, isEditing, onClick }: Props) {
           : 'grid grid-cols-2 sm:grid-cols-4 gap-6'
         }>
           {data.colors?.map((color: any, index: number) => (
-            <div key={index} className="flex flex-col bg-white/[0.02] border border-white/5 rounded-xl overflow-hidden p-3">
+            <div key={index} style={getCardRadiusStyle(style.radius)} className="flex flex-col bg-white/[0.02] border border-white/5 overflow-hidden p-3 animate-fade-in">
               <div 
-                className="w-full h-24 rounded-lg shadow-inner mb-3 transition-transform duration-300 hover:scale-[1.02]" 
-                style={{ backgroundColor: color.hex }}
+                className="w-full h-24 shadow-inner mb-3 transition-transform duration-300 hover:scale-[1.02]" 
+                style={{ 
+                  backgroundColor: color.hex, 
+                  borderRadius: style.radius ? `calc(${style.radius} - 4px)` : '8px' 
+                }}
               />
               
               <EditableText

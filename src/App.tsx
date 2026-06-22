@@ -3,6 +3,7 @@ import { Toolbar } from './components/editor/Toolbar'
 import { SectionList } from './components/editor/SectionList'
 import { EditorCanvas } from './components/editor/EditorCanvas'
 import { SectionInspector } from './components/editor/SectionInspector'
+import { TextFormatToolbar } from './components/editor/TextFormatToolbar'
 import { useProjectStore } from './lib/store/projectStore'
 import { exportProjectToHTML } from './lib/export/htmlExporter'
 import { Dashboard } from './components/dashboard/Dashboard'
@@ -209,8 +210,12 @@ function App() {
           </button>
         </div>
       )}
+
+      {/* Floating formatting toolbar */}
+      {!previewMode && <TextFormatToolbar />}
     </div>
   )
 }
 
 export default App
+
