@@ -57,6 +57,18 @@ A premium, interactive web application designed to help designers structure, pro
 
 ## 📝 Changelog
 
+### [v1.2.0] - 2026-06-22
+
+#### 🚀 Added
+- **Diseñador de Temas Personalizados**: Panel global interactivo con selectores de color nativos (lienzo, secciones, tarjetas, acento) y selectores tipográficos (fuentes de títulos, párrafos y redondeado de bordes) que se guardan e importan/exportan.
+- **Menú Hamburguesa Responsivo**: Menú colapsable en cabecera optimizado para tablets y móviles que agrupa todas las herramientas, idiomas, exportaciones e historial de forma limpia.
+- **Edición de Texto Instantánea**: Habilitado el atributo `contentEditable` permanente en todos los textos del lienzo para editarlos en un solo clic, con foco y des-foco automático al hacer clic fuera del lienzo.
+- **Selector Visual de Iconos**: Panel flotante en forma de cuadrícula (`grid`) con iconos reales de Lucide para la sección de Proceso, reemplazando la lista descolgable de texto estándar.
+- **Selectores Customizados de UI**: Creado el componente accesible `CustomSelect` para reemplazar todos los selectores HTML nativos del proyecto por una versión oscura y consistente con el diseño de la aplicación.
+- **Pipeline de Tauri & Automatización (CI/CD)**: Compilado el instalador nativo de macOS (`.app` y `.dmg`) y creado el script `local-ci.sh` para automatizar builds y despliegues directamente a `/Applications`.
+
+---
+
 ### [v1.1.0] - 2026-06-20
 
 #### 🚀 Added
