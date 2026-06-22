@@ -23,13 +23,14 @@ export function CoverSection({ section, isEditing, onClick }: Props) {
         background: style.background,
         color: style.textColor,
         padding: style.padding || '120px 40px',
-      }}
+        '--section-accent': style.accentColor || 'var(--accent)',
+      } as React.CSSProperties}
       className={`relative w-full overflow-hidden transition-all duration-300 ${
-        isEditing ? 'ring-2 ring-violet-500 ring-offset-2' : ''
+        isEditing ? 'ring-2 ring-accent ring-offset-2' : ''
       } cursor-pointer min-h-[500px] flex flex-col justify-center`}
     >
       {data.decorElements && (
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-tr from-violet-500/20 to-amber-500/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-tr from-accent/20 to-amber-500/20 rounded-full blur-3xl pointer-events-none" />
       )}
       
       <div className={`relative z-10 max-w-[1120px] mx-auto w-full px-6 flex flex-col ${
@@ -50,7 +51,7 @@ export function CoverSection({ section, isEditing, onClick }: Props) {
           onChange={(val) => handleUpdate('eyebrow', val)}
           isEditing={isEditing}
           tagName="span"
-          className="font-mono text-xs tracking-[0.2em] font-semibold text-violet-400 mb-4 inline-block uppercase"
+          className="font-mono text-xs tracking-[0.2em] font-semibold text-accent mb-4 inline-block uppercase"
         />
         
         <EditableText

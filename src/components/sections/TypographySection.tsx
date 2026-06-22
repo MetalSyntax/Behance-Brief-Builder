@@ -29,9 +29,10 @@ export function TypographySection({ section, isEditing, onClick }: Props) {
         background: style.background,
         color: style.textColor,
         padding: style.padding || '100px 80px',
-      }}
+        '--section-accent': style.accentColor || 'var(--accent)',
+      } as React.CSSProperties}
       className={`w-full overflow-hidden transition-all duration-300 ${
-        isEditing ? 'ring-2 ring-violet-500 ring-offset-2' : ''
+        isEditing ? 'ring-2 ring-accent ring-offset-2' : ''
       } cursor-pointer`}
     >
       <div className="max-w-[1120px] mx-auto w-full px-6">
@@ -65,7 +66,7 @@ export function TypographySection({ section, isEditing, onClick }: Props) {
                   onChange={(val) => handleFontUpdate(index, 'role', val)}
                   isEditing={isEditing}
                   tagName="span"
-                  className="font-mono text-xs uppercase tracking-wider text-violet-400 font-semibold mb-2 block"
+                  className="font-mono text-xs uppercase tracking-wider text-accent font-semibold mb-2 block"
                 />
                 
                 <EditableText

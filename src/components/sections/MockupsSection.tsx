@@ -60,9 +60,10 @@ export function MockupsSection({ section, isEditing, onClick }: Props) {
         background: style.background,
         color: style.textColor,
         padding: style.padding || '100px 80px',
-      }}
+        '--section-accent': style.accentColor || 'var(--accent)',
+      } as React.CSSProperties}
       className={`w-full overflow-hidden transition-all duration-300 ${
-        isEditing ? 'ring-2 ring-violet-500 ring-offset-2' : ''
+        isEditing ? 'ring-2 ring-accent ring-offset-2' : ''
       } cursor-pointer`}
     >
       <div className="max-w-[1120px] mx-auto w-full px-6">
@@ -111,7 +112,7 @@ export function MockupsSection({ section, isEditing, onClick }: Props) {
             data.mockups?.map((mock: any, index: number) => (
               <div 
                 key={index} 
-                className="group relative flex flex-col items-center justify-center bg-white/[0.02] border border-white/5 rounded-2xl overflow-hidden p-6 aspect-[4/5] hover:border-violet-500/20 transition-all duration-300 w-full"
+                className="group relative flex flex-col items-center justify-center bg-white/[0.02] border border-white/5 rounded-2xl overflow-hidden p-6 aspect-[4/5] hover:border-accent/20 transition-all duration-300 w-full"
               >
                 {mock.image ? (
                   <div className="relative w-full h-full flex items-center justify-center">
@@ -137,9 +138,9 @@ export function MockupsSection({ section, isEditing, onClick }: Props) {
                       disabled={!isEditing}
                     />
                     
-                    <div className="w-20 h-40 border-2 border-white/20 rounded-2xl flex flex-col items-center justify-center mb-4 relative hover:border-violet-500/40 transition-colors">
+                    <div className="w-20 h-40 border-2 border-white/20 rounded-2xl flex flex-col items-center justify-center mb-4 relative hover:border-accent/40 transition-colors">
                       <div className="w-12 h-1 bg-white/25 rounded-full absolute top-2" />
-                      <Upload size={16} className="text-zinc-500 group-hover:text-violet-400 mb-1" />
+                      <Upload size={16} className="text-zinc-500 group-hover:text-accent mb-1" />
                       <span className="text-[8px] uppercase font-mono tracking-wider text-zinc-500">Subir</span>
                       <div className="w-6 h-6 border border-white/20 rounded-full absolute bottom-2" />
                     </div>

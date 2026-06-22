@@ -32,9 +32,10 @@ export function ProcessSection({ section, isEditing, onClick }: Props) {
         background: style.background,
         color: style.textColor,
         padding: style.padding || '100px 80px',
+        '--section-accent': style.accentColor || 'var(--accent)',
       } as React.CSSProperties}
       className={`relative border-b border-white/5 transition-all duration-300 ${
-        isEditing ? 'ring-2 ring-violet-500/50' : ''
+        isEditing ? 'ring-2 ring-accent/50' : ''
       }`}
     >
       <div 
@@ -48,7 +49,7 @@ export function ProcessSection({ section, isEditing, onClick }: Props) {
               onChange={(val) => handleUpdate('sectionNumber', val)}
               isEditing={isEditing}
               tagName="span"
-              className="text-xs font-bold font-mono tracking-widest text-violet-400 uppercase"
+              className="text-xs font-bold font-mono tracking-widest text-accent uppercase"
             />
           )}
           
@@ -67,14 +68,14 @@ export function ProcessSection({ section, isEditing, onClick }: Props) {
             const IconComponent = (LucideIcons as any)[step.icon] || LucideIcons.HelpCircle
             
             return (
-              <div key={index} className="flex flex-col bg-white/[0.02] border border-white/5 rounded-2xl p-6 relative overflow-hidden group hover:border-violet-500/20 transition-all duration-300">
+              <div key={index} className="flex flex-col bg-white/[0.02] border border-white/5 rounded-2xl p-6 relative overflow-hidden group hover:border-accent/20 transition-all duration-300">
                 <div className="absolute top-4 right-4 font-mono text-4xl opacity-5 font-bold group-hover:opacity-10 transition-opacity">
                   0{index + 1}
                 </div>
                 
                 <div 
-                  className={`w-12 h-12 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-400 mb-6 relative ${
-                    isEditing ? 'cursor-pointer hover:bg-violet-500/20 hover:border-violet-500/30' : ''
+                  className={`w-12 h-12 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent mb-6 relative ${
+                    isEditing ? 'cursor-pointer hover:bg-accent/20 hover:border-accent/30' : ''
                   }`}
                   onClick={(e) => {
                     if (isEditing) {
@@ -114,7 +115,7 @@ export function ProcessSection({ section, isEditing, onClick }: Props) {
                                 setActiveIconPicker(null)
                               }}
                               className={`p-1.5 rounded-lg hover:bg-white/5 flex items-center justify-center transition-all ${
-                                step.icon === name ? 'text-violet-400 bg-violet-500/10' : 'text-zinc-400'
+                                step.icon === name ? 'text-accent bg-accent/10' : 'text-zinc-400'
                               }`}
                               title={name}
                             >

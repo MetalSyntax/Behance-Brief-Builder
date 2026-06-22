@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+@theme {
+  --color-accent: var(--section-accent, var(--accent));
+}
+
 :root {
   --bg: #0e0e11;
   --bg-sidebar: #13131a;

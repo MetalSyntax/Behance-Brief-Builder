@@ -29,9 +29,10 @@ export function ResultsSection({ section, isEditing, onClick }: Props) {
         background: style.background,
         color: style.textColor,
         padding: style.padding || '100px 80px',
-      }}
+        '--section-accent': style.accentColor || 'var(--accent)',
+      } as React.CSSProperties}
       className={`w-full overflow-hidden transition-all duration-300 ${
-        isEditing ? 'ring-2 ring-violet-500 ring-offset-2' : ''
+        isEditing ? 'ring-2 ring-accent ring-offset-2' : ''
       } cursor-pointer`}
     >
       <div className="max-w-[1120px] mx-auto w-full px-6">
@@ -76,7 +77,7 @@ export function ResultsSection({ section, isEditing, onClick }: Props) {
                   onChange={(val) => handleMetricUpdate(index, 'value', val)}
                   isEditing={isEditing}
                   tagName="div"
-                  className="font-mono text-[42px] leading-none font-bold text-violet-400 mb-2 tracking-tight"
+                  className="font-mono text-[42px] leading-none font-bold text-accent mb-2 tracking-tight"
                 />
                 
                 <EditableText

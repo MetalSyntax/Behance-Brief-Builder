@@ -29,9 +29,10 @@ export function FooterSection({ section, isEditing, onClick }: Props) {
         background: style.background,
         color: style.textColor,
         padding: style.padding || '80px 40px',
-      }}
+        '--section-accent': style.accentColor || 'var(--accent)',
+      } as React.CSSProperties}
       className={`w-full overflow-hidden transition-all duration-300 ${
-        isEditing ? 'ring-2 ring-violet-500 ring-offset-2' : ''
+        isEditing ? 'ring-2 ring-accent ring-offset-2' : ''
       } cursor-pointer`}
     >
       <div className="max-w-[1120px] mx-auto w-full px-6 flex flex-col md:flex-row md:items-center md:justify-between gap-8 border-t border-white/10 pt-12">
@@ -75,7 +76,7 @@ export function FooterSection({ section, isEditing, onClick }: Props) {
                 onChange={(val) => handleSocialLinkUpdate(index, 'platform', val)}
                 isEditing={isEditing}
                 tagName="span"
-                className="text-sm font-mono tracking-wider font-semibold text-violet-400 hover:text-violet-300 transition-colors uppercase"
+                className="text-sm font-mono tracking-wider font-semibold text-accent hover:text-accent transition-colors uppercase"
               />
             ))}
           </div>

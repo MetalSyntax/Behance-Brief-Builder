@@ -29,9 +29,10 @@ export function OverviewSection({ section, isEditing, onClick }: Props) {
         background: style.background,
         color: style.textColor,
         padding: style.padding || '100px 80px',
-      }}
+        '--section-accent': style.accentColor || 'var(--accent)',
+      } as React.CSSProperties}
       className={`w-full overflow-hidden transition-all duration-300 ${
-        isEditing ? 'ring-2 ring-violet-500 ring-offset-2' : ''
+        isEditing ? 'ring-2 ring-accent ring-offset-2' : ''
       } cursor-pointer`}
     >
       <div className="max-w-[1120px] mx-auto w-full px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
@@ -69,13 +70,13 @@ export function OverviewSection({ section, isEditing, onClick }: Props) {
         
         <div className="lg:col-span-4 grid grid-cols-2 gap-6 pt-2 lg:pt-14">
           {data.metrics?.map((metric: any, index: number) => (
-            <div key={index} className="border-l-2 border-violet-500/30 pl-4 py-2 bg-white/[0.01] p-3 rounded-r-lg">
+            <div key={index} className="border-l-2 border-accent/30 pl-4 py-2 bg-white/[0.01] p-3 rounded-r-lg">
               <EditableText
                 value={metric.label}
                 onChange={(val) => handleMetricUpdate(index, 'label', val)}
                 isEditing={isEditing}
                 tagName="div"
-                className="font-mono text-xs uppercase text-violet-400 font-semibold mb-1"
+                className="font-mono text-xs uppercase text-accent font-semibold mb-1"
               />
               
               <EditableText
