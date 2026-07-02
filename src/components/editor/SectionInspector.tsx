@@ -352,6 +352,28 @@ export function SectionInspector() {
     )
   }
 
+  const renderFieldHeader = (label: string, styleKey: string) => {
+    const isHidden = (section?.style as any)?.[styleKey] || false
+    return (
+      <div className="flex items-center justify-between mb-1 select-none">
+        <label className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 block uppercase">
+          {label}
+        </label>
+        <button
+          onClick={() => updateSectionStyle(section.id, { [styleKey]: !isHidden })}
+          className={`p-1 rounded transition-all cursor-pointer ${
+            isHidden 
+              ? 'text-red-500 hover:text-red-400 bg-red-500/5' 
+              : 'text-zinc-500 hover:text-white hover:bg-white/5'
+          }`}
+          title={isHidden ? "Mostrar elemento" : "Ocultar elemento"}
+        >
+          {isHidden ? <EyeOff size={11} /> : <Eye size={11} />}
+        </button>
+      </div>
+    )
+  }
+
   const handleDataChange = (key: string, value: any) => {
     updateSection(section.id, { [key]: value })
   }
@@ -364,7 +386,7 @@ export function SectionInspector() {
   const renderCoverEditor = (data: any) => (
     <div className="space-y-4">
       <div>
-        <label className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 block mb-1 uppercase">{t('inspector.field.eyebrow')}</label>
+        {renderFieldHeader(t('inspector.field.eyebrow'), 'hideEyebrow')}
         <input
           type="text"
           value={data.eyebrow || ''}
@@ -374,7 +396,7 @@ export function SectionInspector() {
       </div>
 
       <div>
-        <label className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 block mb-1 uppercase">{t('inspector.field.mainTitle')}</label>
+        {renderFieldHeader(t('inspector.field.mainTitle'), 'hideTitle')}
         <textarea
           rows={3}
           value={data.title || ''}
@@ -384,7 +406,7 @@ export function SectionInspector() {
       </div>
 
       <div>
-        <label className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 block mb-1 uppercase">{t('inspector.field.subtitle')}</label>
+        {renderFieldHeader(t('inspector.field.subtitle'), 'hideSubtitle')}
         <textarea
           rows={3}
           value={data.subtitle || ''}
@@ -462,7 +484,7 @@ export function SectionInspector() {
       )}
 
       <div>
-        <label className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 block mb-1 uppercase">{t('inspector.field.pageCounter')}</label>
+        {renderFieldHeader(t('inspector.field.pageCounter'), 'hidePageCounter')}
         <input
           type="text"
           value={data.pageCounter || ''}
@@ -496,7 +518,7 @@ export function SectionInspector() {
       <div className="space-y-4">
         <div className="grid grid-cols-3 gap-2">
           <div className="col-span-1">
-            <label className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 block mb-1 uppercase">{t('inspector.field.sectionNumber')}</label>
+            {renderFieldHeader(t('inspector.field.sectionNumber'), 'hideSectionNumber')}
             <input
               type="text"
               value={data.sectionNumber || ''}
@@ -505,7 +527,7 @@ export function SectionInspector() {
             />
           </div>
           <div className="col-span-2">
-            <label className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 block mb-1 uppercase">{t('inspector.field.sectionTitle')}</label>
+            {renderFieldHeader(t('inspector.field.sectionTitle'), 'hideTitle')}
             <input
               type="text"
               value={data.title || ''}
@@ -516,7 +538,7 @@ export function SectionInspector() {
         </div>
 
         <div>
-          <label className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 block mb-1 uppercase">{t('inspector.field.contextParagraph')}</label>
+          {renderFieldHeader(t('inspector.field.contextParagraph'), 'hideDescription')}
           <textarea
             rows={5}
             value={data.contextText || ''}
@@ -589,7 +611,7 @@ export function SectionInspector() {
       <div className="space-y-4">
         <div className="grid grid-cols-3 gap-2">
           <div className="col-span-1">
-            <label className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 block mb-1 uppercase">{t('inspector.field.sectionNumber')}</label>
+            {renderFieldHeader(t('inspector.field.sectionNumber'), 'hideSectionNumber')}
             <input
               type="text"
               value={data.sectionNumber || ''}
@@ -598,7 +620,7 @@ export function SectionInspector() {
             />
           </div>
           <div className="col-span-2">
-            <label className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 block mb-1 uppercase">{t('inspector.field.sectionTitle')}</label>
+            {renderFieldHeader(t('inspector.field.sectionTitle'), 'hideTitle')}
             <input
               type="text"
               value={data.title || ''}
@@ -614,8 +636,8 @@ export function SectionInspector() {
             value={data.layout || 'grid'}
             onChange={(val) => handleDataChange('layout', val)}
             options={[
-              { value: 'grid', label: 'Grilla (Grid)' },
-              { value: 'horizontal-strip', label: 'Franja Horizontal' }
+              { value: 'grid', label: 'Cuadrícula (Grid)' },
+              { value: 'horizontal-strip', label: 'Franja Horizontal (Strip)' }
             ]}
             className="w-full"
             triggerClassName="w-full py-2 justify-between"
@@ -708,7 +730,7 @@ export function SectionInspector() {
       <div className="space-y-4">
         <div className="grid grid-cols-3 gap-2">
           <div className="col-span-1">
-            <label className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 block mb-1 uppercase">{t('inspector.field.sectionNumber')}</label>
+            {renderFieldHeader(t('inspector.field.sectionNumber'), 'hideSectionNumber')}
             <input
               type="text"
               value={data.sectionNumber || ''}
@@ -717,7 +739,7 @@ export function SectionInspector() {
             />
           </div>
           <div className="col-span-2">
-            <label className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 block mb-1 uppercase">{t('inspector.field.sectionTitle')}</label>
+            {renderFieldHeader(t('inspector.field.sectionTitle'), 'hideTitle')}
             <input
               type="text"
               value={data.title || ''}
@@ -728,7 +750,7 @@ export function SectionInspector() {
         </div>
 
         <div>
-          <label className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 block mb-1 uppercase">{t('inspector.field.subtitle')}</label>
+          {renderFieldHeader(t('inspector.field.subtitle'), 'hideDescription')}
           <input
             type="text"
             value={data.description || ''}
@@ -1009,7 +1031,7 @@ export function SectionInspector() {
       <div className="space-y-4">
         <div className="grid grid-cols-3 gap-2">
           <div className="col-span-1">
-            <label className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 block mb-1 uppercase">{t('inspector.field.sectionNumber')}</label>
+            {renderFieldHeader(t('inspector.field.sectionNumber'), 'hideSectionNumber')}
             <input
               type="text"
               value={data.sectionNumber || ''}
@@ -1018,7 +1040,7 @@ export function SectionInspector() {
             />
           </div>
           <div className="col-span-2">
-            <label className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 block mb-1 uppercase">{t('inspector.field.sectionTitle')}</label>
+            {renderFieldHeader(t('inspector.field.sectionTitle'), 'hideTitle')}
             <input
               type="text"
               value={data.title || ''}
@@ -1109,7 +1131,7 @@ export function SectionInspector() {
       <div className="space-y-4">
         <div className="grid grid-cols-3 gap-2">
           <div className="col-span-1">
-            <label className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 block mb-1 uppercase">{t('inspector.field.sectionNumber')}</label>
+            {renderFieldHeader(t('inspector.field.sectionNumber'), 'hideSectionNumber')}
             <input
               type="text"
               value={data.sectionNumber || ''}
@@ -1118,7 +1140,7 @@ export function SectionInspector() {
             />
           </div>
           <div className="col-span-2">
-            <label className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 block mb-1 uppercase">{t('inspector.field.sectionTitle')}</label>
+            {renderFieldHeader(t('inspector.field.sectionTitle'), 'hideTitle')}
             <input
               type="text"
               value={data.title || ''}
@@ -1213,7 +1235,7 @@ export function SectionInspector() {
       <div className="space-y-4">
         <div className="grid grid-cols-3 gap-2">
           <div className="col-span-1">
-            <label className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 block mb-1 uppercase">{t('inspector.field.sectionNumber')}</label>
+            {renderFieldHeader(t('inspector.field.sectionNumber'), 'hideSectionNumber')}
             <input
               type="text"
               value={data.sectionNumber || ''}
@@ -1222,7 +1244,7 @@ export function SectionInspector() {
             />
           </div>
           <div className="col-span-2">
-            <label className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 block mb-1 uppercase">{t('inspector.field.sectionTitle')}</label>
+            {renderFieldHeader(t('inspector.field.sectionTitle'), 'hideTitle')}
             <input
               type="text"
               value={data.title || ''}
@@ -1233,7 +1255,7 @@ export function SectionInspector() {
         </div>
 
         <div>
-          <label className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 block mb-1 uppercase">{t('inspector.field.description')}</label>
+          {renderFieldHeader(t('inspector.field.description'), 'hideDescription')}
           <textarea
             rows={4}
             value={data.description || ''}
@@ -1289,7 +1311,7 @@ export function SectionInspector() {
     <div className="space-y-4">
       <div className="grid grid-cols-3 gap-2">
         <div className="col-span-1">
-          <label className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 block mb-1 uppercase">{t('inspector.field.sectionNumber')}</label>
+          {renderFieldHeader(t('inspector.field.sectionNumber'), 'hideSectionNumber')}
           <input
             type="text"
             value={data.sectionNumber || ''}
@@ -1298,7 +1320,7 @@ export function SectionInspector() {
           />
         </div>
         <div className="col-span-2">
-          <label className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 block mb-1 uppercase">{t('inspector.field.sectionTitle')}</label>
+          {renderFieldHeader(t('inspector.field.sectionTitle'), 'hideTitle')}
           <input
             type="text"
             value={data.title || ''}
@@ -1309,7 +1331,7 @@ export function SectionInspector() {
       </div>
 
       <div>
-        <label className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 block mb-1 uppercase">{t('inspector.field.description')}</label>
+        {renderFieldHeader(t('inspector.field.description'), 'hideDescription')}
         <textarea
           rows={3}
           value={data.description || ''}

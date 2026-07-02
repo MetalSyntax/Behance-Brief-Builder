@@ -80,6 +80,12 @@ export interface SectionStyle {
   subtitleSize?: 'sm' | 'md' | 'lg' | 'xl' | '2xl'
   textAlign?: 'left' | 'center'
   radius?: '0px' | '4px' | '8px' | '12px' | '16px' | '24px'
+  hideTitle?: boolean
+  hideSubtitle?: boolean
+  hideDescription?: boolean
+  hideSectionNumber?: boolean
+  hideEyebrow?: boolean
+  hidePageCounter?: boolean
 }
 
 

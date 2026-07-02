@@ -136,6 +136,7 @@ export function CoverSection({ section, isEditing, onClick }: Props) {
             onChange={(val) => handleUpdate('pageCounter', val)}
             isEditing={isEditing}
             tagName="div"
+            hidden={style.hidePageCounter}
             className="font-mono text-sm tracking-wider uppercase opacity-60 mb-6"
           />
         )}
@@ -145,6 +146,7 @@ export function CoverSection({ section, isEditing, onClick }: Props) {
           onChange={(val) => handleUpdate('eyebrow', val)}
           isEditing={isEditing}
           tagName="span"
+          hidden={style.hideEyebrow}
           className="font-mono text-xs tracking-[0.2em] font-semibold text-accent mb-4 inline-block uppercase"
         />
         
@@ -153,6 +155,7 @@ export function CoverSection({ section, isEditing, onClick }: Props) {
           onChange={(val) => handleUpdate('title', val)}
           isEditing={isEditing}
           tagName="h1"
+          hidden={style.hideTitle}
           className={`font-bold tracking-tight leading-none mb-6 whitespace-pre-line ${
             style.titleSize ? getTitleClass(style.titleSize) : (data.titleSize === 'display' ? 'text-6xl md:text-8xl' : 'text-4xl md:text-5xl')
           }`}
@@ -164,6 +167,7 @@ export function CoverSection({ section, isEditing, onClick }: Props) {
           onChange={(val) => handleUpdate('subtitle', val)}
           isEditing={isEditing}
           tagName="p"
+          hidden={style.hideSubtitle}
           className={`${getSubtitleClass(style.subtitleSize, 'text-lg md:text-xl opacity-80 max-w-2xl font-light')}`}
           style={{ fontFamily: 'var(--font-body)' }}
         />

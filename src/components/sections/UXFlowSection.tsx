@@ -51,6 +51,7 @@ export function UXFlowSection({ section, isEditing, onClick }: Props) {
               onChange={(val) => handleUpdate('sectionNumber', val)}
               isEditing={isEditing}
               tagName="span"
+              hidden={style.hideSectionNumber}
               className="font-mono text-sm opacity-60 bg-white/5 border border-white/10 px-2 py-0.5 rounded"
             />
           )}
@@ -60,6 +61,7 @@ export function UXFlowSection({ section, isEditing, onClick }: Props) {
             onChange={(val) => handleUpdate('title', val)}
             isEditing={isEditing}
             tagName="h2"
+            hidden={style.hideTitle}
             className={`${getTitleClass(style.titleSize)} ${getTextAlignClass(style.textAlign)}`}
             style={{ fontFamily: 'var(--font-display)' }}
           />
@@ -71,6 +73,7 @@ export function UXFlowSection({ section, isEditing, onClick }: Props) {
             onChange={(val) => handleUpdate('description', val)}
             isEditing={isEditing}
             tagName="p"
+            hidden={style.hideDescription}
             className={`${getSubtitleClass(style.subtitleSize)} ${getTextAlignClass(style.textAlign)} mb-8 max-w-3xl ${style.textAlign === 'center' ? 'mx-auto' : ''}`}
             style={{ fontFamily: 'var(--font-body)' }}
           />

@@ -9,20 +9,15 @@ interface EditableTextProps {
   tagName?: 'h1' | 'h2' | 'h3' | 'p' | 'span' | 'div'
   style?: React.CSSProperties
   placeholder?: string
+  hidden?: boolean
 }
 
 export function EditableText(props: EditableTextProps) {
-  const { value, onChange, className = '', tagName = 'span', style, placeholder } = props
+  const { value, onChange, className = '', tagName = 'span', style, placeholder, hidden } = props
   const ref = useRef<HTMLElement>(null)
   const { previewMode } = useProjectStore()
 
-  if (previewMode && (!value || value.trim() === '' || value.trim() === '<br>')) {
-    return null
-  }
-
-  const isEditable = !previewMode
-
-  // Sync internal ref HTML only when value changes externally (e.g. undo/redo/theme)
+  // Sync internal ref HTML only when value changes externally (e.g. undo/redo/theme/visibility)
   useEffect(() => {
     if (ref.current && document.activeElement !== ref.current) {
       const currentHTML = ref.current.innerHTML
@@ -30,7 +25,17 @@ export function EditableText(props: EditableTextProps) {
         ref.current.innerHTML = value || ''
       }
     }
-  }, [value])
+  }, [value, hidden])
+
+  if (hidden) {
+    return null
+  }
+
+  if (previewMode && (!value || value.trim() === '' || value.trim() === '<br>')) {
+    return null
+  }
+
+  const isEditable = !previewMode
 
   const handleBlur = () => {
     if (ref.current) {

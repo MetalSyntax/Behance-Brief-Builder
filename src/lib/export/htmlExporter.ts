@@ -119,10 +119,10 @@ export function exportProjectToHTML(project: Project, lang = 'en'): string {
         <div class="section-container" ${secStyleAttr}>
           ${getDecorElementsHtml(data.decorElements, data.decorType, project.theme)}
           <div class="section-content ${data.layout === 'centered' ? 'text-center items-center' : 'text-left items-start'}" style="position: relative; z-index: 2;">
-            ${data.pageCounter ? wrap('div', data.pageCounter, 'page-counter') : ''}
-            ${wrap('span', data.eyebrow, 'eyebrow')}
-            ${wrap('h1', data.title, `title font-display ${data.titleSize === 'display' ? 'text-xl' : data.titleSize === 'xxl' ? 'text-lg' : 'text-md'}`)}
-            ${wrap('p', data.subtitle, 'subtitle font-body')}
+            ${!style.hidePageCounter && data.pageCounter ? wrap('div', data.pageCounter, 'page-counter') : ''}
+            ${!style.hideEyebrow ? wrap('span', data.eyebrow, 'eyebrow') : ''}
+            ${!style.hideTitle ? wrap('h1', data.title, `title font-display ${data.titleSize === 'display' ? 'text-xl' : data.titleSize === 'xxl' ? 'text-lg' : 'text-md'}`) : ''}
+            ${!style.hideSubtitle ? wrap('p', data.subtitle, 'subtitle font-body') : ''}
           </div>
         </div>`
         
@@ -132,10 +132,10 @@ export function exportProjectToHTML(project: Project, lang = 'en'): string {
           <div class="section-content-grid grid-12">
             <div class="col-8">
               <div class="section-header">
-                ${wrap('span', data.sectionNumber, 'section-number')}
-                ${wrap('h2', data.title, 'section-title font-display')}
+                ${!style.hideSectionNumber ? wrap('span', data.sectionNumber, 'section-number') : ''}
+                ${!style.hideTitle ? wrap('h2', data.title, 'section-title font-display') : ''}
               </div>
-              ${wrap('p', data.contextText, 'overview-text font-body')}
+              ${!style.hideDescription ? wrap('p', data.contextText, 'overview-text font-body') : ''}
             </div>
             <div class="col-4 metrics-grid">
               ${(data.metrics || []).map((m: any) => `
@@ -153,8 +153,8 @@ export function exportProjectToHTML(project: Project, lang = 'en'): string {
         <div class="section-container" ${secStyleAttr}>
           <div class="section-content">
             <div class="section-header">
-              ${wrap('span', data.sectionNumber, 'section-number')}
-              ${wrap('h2', data.title, 'section-title font-display')}
+              ${!style.hideSectionNumber ? wrap('span', data.sectionNumber, 'section-number') : ''}
+              ${!style.hideTitle ? wrap('h2', data.title, 'section-title font-display') : ''}
             </div>
             <div class="colors-${data.layout === 'horizontal-strip' ? 'strip' : 'grid'}">
               ${(data.colors || []).map((c: any) => `
@@ -175,10 +175,10 @@ export function exportProjectToHTML(project: Project, lang = 'en'): string {
         <div class="section-container" ${secStyleAttr}>
           <div class="section-content">
             <div class="section-header">
-              ${wrap('span', data.sectionNumber, 'section-number')}
-              ${wrap('h2', data.title, 'section-title font-display')}
+              ${!style.hideSectionNumber ? wrap('span', data.sectionNumber, 'section-number') : ''}
+              ${!style.hideTitle ? wrap('h2', data.title, 'section-title font-display') : ''}
             </div>
-            ${wrap('p', data.description, 'section-desc font-body')}
+            ${!style.hideDescription ? wrap('p', data.description, 'section-desc font-body') : ''}
             <div class="mockups-container ${gridClass}">
               ${(data.mockups || []).map((mock: any, idx: number) => `
                 <div class="mockup-item device-${mock.deviceFrame}" style="display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 12px; height: 100%;">
@@ -225,10 +225,10 @@ export function exportProjectToHTML(project: Project, lang = 'en'): string {
           <div class="section-content-grid grid-2-col ${data.layout === 'left-image' ? 'reverse' : ''}">
             <div>
               <div class="section-header">
-                ${wrap('span', data.sectionNumber, 'section-number')}
-                ${wrap('h2', data.title, 'section-title font-display')}
+                ${!style.hideSectionNumber ? wrap('span', data.sectionNumber, 'section-number') : ''}
+                ${!style.hideTitle ? wrap('h2', data.title, 'section-title font-display') : ''}
               </div>
-              ${wrap('p', data.description, 'body-text font-body')}
+              ${!style.hideDescription ? wrap('p', data.description, 'body-text font-body') : ''}
             </div>
             <div class="image-wrapper">
               ${data.image ? `<img src="${data.image}">` : '<div class="img-placeholder">Problem Image</div>'}
@@ -241,8 +241,8 @@ export function exportProjectToHTML(project: Project, lang = 'en'): string {
         <div class="section-container" ${secStyleAttr}>
           <div class="section-content">
             <div class="section-header">
-              ${wrap('span', data.sectionNumber, 'section-number')}
-              ${wrap('h2', data.title, 'section-title font-display')}
+              ${!style.hideSectionNumber ? wrap('span', data.sectionNumber, 'section-number') : ''}
+              ${!style.hideTitle ? wrap('h2', data.title, 'section-title font-display') : ''}
             </div>
             <div class="steps-grid">
               ${(data.steps || []).map((step: any, idx: number) => `
@@ -261,8 +261,8 @@ export function exportProjectToHTML(project: Project, lang = 'en'): string {
         <div class="section-container" ${secStyleAttr}>
           <div class="section-content">
             <div class="section-header">
-              ${wrap('span', data.sectionNumber, 'section-number')}
-              ${wrap('h2', data.title, 'section-title font-display')}
+              ${!style.hideSectionNumber ? wrap('span', data.sectionNumber, 'section-number') : ''}
+              ${!style.hideTitle ? wrap('h2', data.title, 'section-title font-display') : ''}
             </div>
             <div class="fonts-list">
               ${(data.fonts || []).map((font: any) => `
@@ -285,10 +285,10 @@ export function exportProjectToHTML(project: Project, lang = 'en'): string {
         <div class="section-container" ${secStyleAttr}>
           <div class="section-content">
             <div class="section-header">
-              ${wrap('span', data.sectionNumber, 'section-number')}
-              ${wrap('h2', data.title, 'section-title font-display')}
+              ${!style.hideSectionNumber ? wrap('span', data.sectionNumber, 'section-number') : ''}
+              ${!style.hideTitle ? wrap('h2', data.title, 'section-title font-display') : ''}
             </div>
-            ${wrap('p', data.description, 'section-desc font-body')}
+            ${!style.hideDescription ? wrap('p', data.description, 'section-desc font-body') : ''}
             <div class="flow-image-wrapper">
               ${data.image ? `<img src="${data.image}">` : '<div class="img-placeholder">UX Flow Map</div>'}
             </div>
@@ -301,10 +301,10 @@ export function exportProjectToHTML(project: Project, lang = 'en'): string {
           <div class="section-content-grid grid-2-col">
             <div>
               <div class="section-header">
-                ${wrap('span', data.sectionNumber, 'section-number')}
-                ${wrap('h2', data.title, 'section-title font-display')}
+                ${!style.hideSectionNumber ? wrap('span', data.sectionNumber, 'section-number') : ''}
+                ${!style.hideTitle ? wrap('h2', data.title, 'section-title font-display') : ''}
               </div>
-              ${wrap('p', data.description, 'body-text font-body')}
+              ${!style.hideDescription ? wrap('p', data.description, 'body-text font-body') : ''}
             </div>
             <div class="results-metrics">
               ${(data.metrics || []).map((m: any) => `

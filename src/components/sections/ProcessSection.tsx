@@ -50,6 +50,7 @@ export function ProcessSection({ section, isEditing, onClick }: Props) {
               onChange={(val) => handleUpdate('sectionNumber', val)}
               isEditing={isEditing}
               tagName="span"
+              hidden={style.hideSectionNumber}
               className="text-xs font-bold font-mono tracking-widest text-accent uppercase"
             />
           )}
@@ -59,6 +60,7 @@ export function ProcessSection({ section, isEditing, onClick }: Props) {
             onChange={(val) => handleUpdate('title', val)}
             isEditing={isEditing}
             tagName="h2"
+            hidden={style.hideTitle}
             className={`${getTitleClass(style.titleSize, 'text-4xl md:text-5xl font-bold tracking-tight')} ${getTextAlignClass(style.textAlign)}`}
             style={{ fontFamily: 'var(--font-display)' }}
           />
