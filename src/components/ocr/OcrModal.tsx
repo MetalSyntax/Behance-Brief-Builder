@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
-import { X, ScanText, Loader } from 'lucide-react'
+import { X, ScanText, Loader, Palette } from 'lucide-react'
 import { OcrDropZone } from './OcrDropZone'
 import { OcrResultsPanel } from './OcrResultsPanel'
+import { ColorDetectorTab } from './ColorDetectorTab'
 import { extractTextFromImage } from '../../lib/ocr/ocrEngine'
 import type { OcrBlock } from '../../lib/ocr/ocrEngine'
 import { suggestFieldMappings } from '../../lib/ocr/textMapper'
@@ -17,6 +18,7 @@ interface Props {
 export function OcrModal({ section, onClose }: Props) {
   const updateSection = useProjectStore((state) => state.updateSection)
   
+  const [activeModalTab, setActiveModalTab] = useState<'ocr' | 'colors'>('ocr')
   const [image, setImage] = useState<File | string | null>(null)
   const [loading, setLoading] = useState(false)
   const [progress, setProgress] = useState(0)
@@ -181,9 +183,9 @@ export function OcrModal({ section, onClose }: Props) {
         {/* Header */}
         <header className="px-6 py-4 border-b border-white/5 flex items-center justify-between bg-[#18181f] shrink-0">
           <div className="flex items-center gap-2 text-violet-400">
-            <ScanText size={18} />
+            {activeModalTab === 'ocr' ? <ScanText size={18} /> : <Palette size={18} />}
             <h2 className="font-bold text-sm text-white tracking-tight uppercase">
-              Extracción OCR de Imagen
+              Estudio de Análisis y Paleta
             </h2>
           </div>
           <button
@@ -194,50 +196,80 @@ export function OcrModal({ section, onClose }: Props) {
           </button>
         </header>
 
+        {/* Tab Selector */}
+        <div className="flex bg-[#18181f] px-6 py-2 border-b border-white/5 gap-5 shrink-0 select-none">
+          <button
+            onClick={() => setActiveModalTab('ocr')}
+            className={`pb-1.5 text-[10px] font-mono font-bold uppercase transition-all cursor-pointer border-b-2 tracking-wider ${
+              activeModalTab === 'ocr'
+                ? 'border-violet-500 text-white'
+                : 'border-transparent text-zinc-500 hover:text-zinc-300'
+            }`}
+          >
+            Extracción de Texto (OCR)
+          </button>
+          <button
+            onClick={() => setActiveModalTab('colors')}
+            className={`pb-1.5 text-[10px] font-mono font-bold uppercase transition-all cursor-pointer border-b-2 tracking-wider ${
+              activeModalTab === 'colors'
+                ? 'border-violet-500 text-white'
+                : 'border-transparent text-zinc-500 hover:text-zinc-300'
+            }`}
+          >
+            Detector de Colores (Paleta)
+          </button>
+        </div>
+
         {/* Content */}
-        <main className="p-6 flex-1 overflow-y-auto min-h-[300px]">
-          {error && (
-            <div className="mb-4 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-xs flex flex-col gap-2">
-              <p className="font-semibold">{error}</p>
-              <button
-                onClick={handleReset}
-                className="self-start px-3 py-1.5 bg-red-600 hover:bg-red-500 text-white rounded-lg font-bold"
-              >
-                Intentar con otra imagen
-              </button>
-            </div>
-          )}
+        <main className="p-6 flex-1 overflow-y-auto min-h-[350px] custom-scrollbar">
+          {activeModalTab === 'ocr' ? (
+            <>
+              {error && (
+                <div className="mb-4 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-xs flex flex-col gap-2">
+                  <p className="font-semibold">{error}</p>
+                  <button
+                    onClick={handleReset}
+                    className="self-start px-3 py-1.5 bg-red-600 hover:bg-red-500 text-white rounded-lg font-bold"
+                  >
+                    Intentar con otra imagen
+                  </button>
+                </div>
+              )}
 
-          {!image && !loading && <OcrDropZone onImageSelected={setImage} />}
+              {!image && !loading && <OcrDropZone onImageSelected={setImage} />}
 
-          {loading && (
-            <div className="flex flex-col items-center justify-center py-12 space-y-4">
-              <Loader className="text-violet-500 animate-spin" size={32} />
-              <div className="text-center">
-                <p className="text-sm font-semibold text-white">Analizando imagen con OCR...</p>
-                <p className="text-[11px] text-zinc-500">Ejecutando WebAssembly local en tu navegador</p>
-              </div>
-              <div className="w-64 bg-zinc-900 rounded-full h-1.5 overflow-hidden">
-                <div 
-                  className="bg-violet-600 h-full transition-all duration-300 rounded-full" 
-                  style={{ width: `${progress}%` }}
+              {loading && (
+                <div className="flex flex-col items-center justify-center py-12 space-y-4">
+                  <Loader className="text-violet-500 animate-spin" size={32} />
+                  <div className="text-center">
+                    <p className="text-sm font-semibold text-white">Analizando imagen con OCR...</p>
+                    <p className="text-[11px] text-zinc-500">Ejecutando WebAssembly local en tu navegador</p>
+                  </div>
+                  <div className="w-64 bg-zinc-900 rounded-full h-1.5 overflow-hidden">
+                    <div 
+                      className="bg-violet-600 h-full transition-all duration-300 rounded-full" 
+                      style={{ width: `${progress}%` }}
+                    />
+                  </div>
+                  <span className="text-xs font-mono font-bold text-violet-400">{progress}%</span>
+                </div>
+              )}
+
+              {blocks.length > 0 && !loading && (
+                <OcrResultsPanel
+                  blocks={blocks}
+                  suggestions={suggestions}
+                  sectionType={section.type}
+                  mappings={mappings}
+                  onMappingChange={handleMappingChange}
+                  onBlockTextChange={handleBlockTextChange}
+                  onApply={handleApply}
+                  onReset={handleReset}
                 />
-              </div>
-              <span className="text-xs font-mono font-bold text-violet-400">{progress}%</span>
-            </div>
-          )}
-
-          {blocks.length > 0 && !loading && (
-            <OcrResultsPanel
-              blocks={blocks}
-              suggestions={suggestions}
-              sectionType={section.type}
-              mappings={mappings}
-              onMappingChange={handleMappingChange}
-              onBlockTextChange={handleBlockTextChange}
-              onApply={handleApply}
-              onReset={handleReset}
-            />
+              )}
+            </>
+          ) : (
+            <ColorDetectorTab sectionId={section.id} onClose={onClose} />
           )}
         </main>
       </div>
