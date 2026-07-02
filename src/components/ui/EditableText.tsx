@@ -16,6 +16,10 @@ export function EditableText(props: EditableTextProps) {
   const ref = useRef<HTMLElement>(null)
   const { previewMode } = useProjectStore()
 
+  if (previewMode && (!value || value.trim() === '' || value.trim() === '<br>')) {
+    return null
+  }
+
   const isEditable = !previewMode
 
   // Sync internal ref HTML only when value changes externally (e.g. undo/redo/theme)

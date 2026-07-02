@@ -99,6 +99,13 @@ export function exportProjectToHTML(project: Project, lang = 'en'): string {
     }
   }
 
+  const wrap = (tag: string, content: string | undefined, className = '', inlineStyle = '') => {
+    if (!content || content.trim() === '' || content.trim() === '<br>') return ''
+    const classAttr = className ? ` class="${className}"` : ''
+    const styleAttr = inlineStyle ? ` style="${inlineStyle}"` : ''
+    return `<${tag}${classAttr}${styleAttr}>${content.replace(/\n/g, '<br>')}</${tag}>`
+  }
+
   const renderedSections = sortedSections.map((section) => {
     const { type, data, style } = section
     const fontOverride = style.displayFont && style.displayFont !== 'default'
@@ -112,10 +119,10 @@ export function exportProjectToHTML(project: Project, lang = 'en'): string {
         <div class="section-container" ${secStyleAttr}>
           ${getDecorElementsHtml(data.decorElements, data.decorType, project.theme)}
           <div class="section-content ${data.layout === 'centered' ? 'text-center items-center' : 'text-left items-start'}" style="position: relative; z-index: 2;">
-            ${data.pageCounter ? `<div class="page-counter">${data.pageCounter}</div>` : ''}
-            <span class="eyebrow">${data.eyebrow}</span>
-            <h1 class="title font-display ${data.titleSize === 'display' ? 'text-xl' : data.titleSize === 'xxl' ? 'text-lg' : 'text-md'}">${data.title.replace(/\n/g, '<br>')}</h1>
-            <p class="subtitle font-body">${data.subtitle}</p>
+            ${data.pageCounter ? wrap('div', data.pageCounter, 'page-counter') : ''}
+            ${wrap('span', data.eyebrow, 'eyebrow')}
+            ${wrap('h1', data.title, `title font-display ${data.titleSize === 'display' ? 'text-xl' : data.titleSize === 'xxl' ? 'text-lg' : 'text-md'}`)}
+            ${wrap('p', data.subtitle, 'subtitle font-body')}
           </div>
         </div>`
         
@@ -125,16 +132,16 @@ export function exportProjectToHTML(project: Project, lang = 'en'): string {
           <div class="section-content-grid grid-12">
             <div class="col-8">
               <div class="section-header">
-                ${data.sectionNumber ? `<span class="section-number">${data.sectionNumber}</span>` : ''}
-                <h2 class="section-title font-display">${data.title}</h2>
+                ${wrap('span', data.sectionNumber, 'section-number')}
+                ${wrap('h2', data.title, 'section-title font-display')}
               </div>
-              <p class="overview-text font-body">${data.contextText}</p>
+              ${wrap('p', data.contextText, 'overview-text font-body')}
             </div>
             <div class="col-4 metrics-grid">
               ${(data.metrics || []).map((m: any) => `
                 <div class="metric-card">
-                  <div class="metric-label">${m.label}</div>
-                  <div class="metric-value font-mono">${m.value}</div>
+                  ${wrap('div', m.label, 'metric-label')}
+                  ${wrap('div', m.value, 'metric-value font-mono')}
                 </div>
               `).join('')}
             </div>
@@ -146,16 +153,16 @@ export function exportProjectToHTML(project: Project, lang = 'en'): string {
         <div class="section-container" ${secStyleAttr}>
           <div class="section-content">
             <div class="section-header">
-              ${data.sectionNumber ? `<span class="section-number">${data.sectionNumber}</span>` : ''}
-              <h2 class="section-title font-display">${data.title}</h2>
+              ${wrap('span', data.sectionNumber, 'section-number')}
+              ${wrap('h2', data.title, 'section-title font-display')}
             </div>
             <div class="colors-${data.layout === 'horizontal-strip' ? 'strip' : 'grid'}">
               ${(data.colors || []).map((c: any) => `
                 <div class="color-card">
                   <div class="color-swatch" style="background-color: ${c.hex};"></div>
-                  <div class="color-name">${c.name}</div>
-                  <div class="color-hex font-mono">${c.hex}</div>
-                  <div class="color-role">${c.role}</div>
+                  ${wrap('div', c.name, 'color-name')}
+                  ${wrap('div', c.hex, 'color-hex font-mono')}
+                  ${wrap('div', c.role, 'color-role')}
                 </div>
               `).join('')}
             </div>
@@ -168,10 +175,10 @@ export function exportProjectToHTML(project: Project, lang = 'en'): string {
         <div class="section-container" ${secStyleAttr}>
           <div class="section-content">
             <div class="section-header">
-              ${data.sectionNumber ? `<span class="section-number">${data.sectionNumber}</span>` : ''}
-              <h2 class="section-title font-display">${data.title}</h2>
+              ${wrap('span', data.sectionNumber, 'section-number')}
+              ${wrap('h2', data.title, 'section-title font-display')}
             </div>
-            ${data.description ? `<p class="section-desc font-body">${data.description}</p>` : ''}
+            ${wrap('p', data.description, 'section-desc font-body')}
             <div class="mockups-container ${gridClass}">
               ${(data.mockups || []).map((mock: any, idx: number) => `
                 <div class="mockup-item device-${mock.deviceFrame}" style="display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 12px; height: 100%;">
@@ -185,7 +192,7 @@ export function exportProjectToHTML(project: Project, lang = 'en'): string {
                       </div>`
                     }
                   </div>
-                  ${mock.caption ? `<div class="mockup-caption" style="font-size: 11px; opacity: 0.6; font-weight: 500; font-family: var(--font-body); text-align: center; width: 100%; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 8px; margin-top: auto;">${mock.caption}</div>` : ''}
+                  ${wrap('div', mock.caption, 'mockup-caption', 'font-size: 11px; opacity: 0.6; font-weight: 500; font-family: var(--font-body); text-align: center; width: 100%; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 8px; margin-top: auto;')}
                 </div>
               `).join('')}
             </div>
@@ -197,8 +204,12 @@ export function exportProjectToHTML(project: Project, lang = 'en'): string {
         <div class="section-container" ${secStyleAttr}>
           <div class="footer-content">
             <div>
-              <h3 class="footer-author font-display">${data.authorName}</h3>
-              <p class="footer-meta font-body">${data.authorRole} &middot; ${data.year}</p>
+              ${wrap('h3', data.authorName, 'footer-author font-display')}
+              <p class="footer-meta font-body">
+                ${data.authorRole ? data.authorRole : ''}
+                ${data.authorRole && data.year ? ' &middot; ' : ''}
+                ${data.year ? data.year : ''}
+              </p>
             </div>
             <div class="footer-links">
               ${(data.socialLinks || []).map((l: any) => `
@@ -214,10 +225,10 @@ export function exportProjectToHTML(project: Project, lang = 'en'): string {
           <div class="section-content-grid grid-2-col ${data.layout === 'left-image' ? 'reverse' : ''}">
             <div>
               <div class="section-header">
-                ${data.sectionNumber ? `<span class="section-number">${data.sectionNumber}</span>` : ''}
-                <h2 class="section-title font-display">${data.title}</h2>
+                ${wrap('span', data.sectionNumber, 'section-number')}
+                ${wrap('h2', data.title, 'section-title font-display')}
               </div>
-              <p class="body-text font-body">${data.description}</p>
+              ${wrap('p', data.description, 'body-text font-body')}
             </div>
             <div class="image-wrapper">
               ${data.image ? `<img src="${data.image}">` : '<div class="img-placeholder">Problem Image</div>'}
@@ -230,15 +241,15 @@ export function exportProjectToHTML(project: Project, lang = 'en'): string {
         <div class="section-container" ${secStyleAttr}>
           <div class="section-content">
             <div class="section-header">
-              ${data.sectionNumber ? `<span class="section-number">${data.sectionNumber}</span>` : ''}
-              <h2 class="section-title font-display">${data.title}</h2>
+              ${wrap('span', data.sectionNumber, 'section-number')}
+              ${wrap('h2', data.title, 'section-title font-display')}
             </div>
             <div class="steps-grid">
               ${(data.steps || []).map((step: any, idx: number) => `
                 <div class="step-card">
                   <div class="step-badge">0${idx + 1}</div>
-                  <h3 class="step-title font-display">${step.title}</h3>
-                  <p class="step-desc font-body">${step.description}</p>
+                  ${wrap('h3', step.title, 'step-title font-display')}
+                  ${wrap('p', step.description, 'step-desc font-body')}
                 </div>
               `).join('')}
             </div>
@@ -250,15 +261,15 @@ export function exportProjectToHTML(project: Project, lang = 'en'): string {
         <div class="section-container" ${secStyleAttr}>
           <div class="section-content">
             <div class="section-header">
-              ${data.sectionNumber ? `<span class="section-number">${data.sectionNumber}</span>` : ''}
-              <h2 class="section-title font-display">${data.title}</h2>
+              ${wrap('span', data.sectionNumber, 'section-number')}
+              ${wrap('h2', data.title, 'section-title font-display')}
             </div>
             <div class="fonts-list">
               ${(data.fonts || []).map((font: any) => `
                 <div class="font-item">
                   <div class="font-info">
-                    <span class="font-role font-mono">${font.role}</span>
-                    <h3 class="font-name">${font.name}</h3>
+                    ${wrap('span', font.role, 'font-role font-mono')}
+                    ${wrap('h3', font.name, 'font-name')}
                   </div>
                   <div class="font-sample" style="font-family: '${font.name}', sans-serif;">
                     ${font.sample}
@@ -274,10 +285,10 @@ export function exportProjectToHTML(project: Project, lang = 'en'): string {
         <div class="section-container" ${secStyleAttr}>
           <div class="section-content">
             <div class="section-header">
-              ${data.sectionNumber ? `<span class="section-number">${data.sectionNumber}</span>` : ''}
-              <h2 class="section-title font-display">${data.title}</h2>
+              ${wrap('span', data.sectionNumber, 'section-number')}
+              ${wrap('h2', data.title, 'section-title font-display')}
             </div>
-            ${data.description ? `<p class="section-desc font-body">${data.description}</p>` : ''}
+            ${wrap('p', data.description, 'section-desc font-body')}
             <div class="flow-image-wrapper">
               ${data.image ? `<img src="${data.image}">` : '<div class="img-placeholder">UX Flow Map</div>'}
             </div>
@@ -290,16 +301,16 @@ export function exportProjectToHTML(project: Project, lang = 'en'): string {
           <div class="section-content-grid grid-2-col">
             <div>
               <div class="section-header">
-                ${data.sectionNumber ? `<span class="section-number">${data.sectionNumber}</span>` : ''}
-                <h2 class="section-title font-display">${data.title}</h2>
+                ${wrap('span', data.sectionNumber, 'section-number')}
+                ${wrap('h2', data.title, 'section-title font-display')}
               </div>
-              <p class="body-text font-body">${data.description}</p>
+              ${wrap('p', data.description, 'body-text font-body')}
             </div>
             <div class="results-metrics">
               ${(data.metrics || []).map((m: any) => `
                 <div class="result-metric-card">
-                  <div class="result-metric-value font-mono">${m.value}</div>
-                  <div class="result-metric-label font-mono">${m.label}</div>
+                  ${wrap('div', m.value, 'result-metric-value font-mono')}
+                  ${wrap('div', m.label, 'result-metric-label font-mono')}
                 </div>
               `).join('')}
             </div>
