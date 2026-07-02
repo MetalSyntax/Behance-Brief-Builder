@@ -185,5 +185,11 @@
       "canvas": "Lienzo",
       "inspector": "Propiedades"
     }
+  },
+  "pwa": {
+    "offlineReady": "BeBrief listo para usar sin conexión.",
+    "updateAvailable": "Nueva versión disponible",
+    "update": "Actualizar",
+    "dismiss": "Cerrar notificación"
   }
 }

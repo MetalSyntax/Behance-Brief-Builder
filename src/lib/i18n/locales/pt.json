@@ -185,5 +185,11 @@
       "canvas": "Tela",
       "inspector": "Propriedades"
     }
+  },
+  "pwa": {
+    "offlineReady": "BeBrief está pronto para uso offline.",
+    "updateAvailable": "Nova versão disponível",
+    "update": "Atualizar",
+    "dismiss": "Fechar notificação"
   }
 }

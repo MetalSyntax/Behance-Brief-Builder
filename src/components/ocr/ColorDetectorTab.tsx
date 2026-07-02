@@ -62,8 +62,8 @@ export function ColorDetectorTab({ sectionId, onClose }: Props) {
       setError(null)
       toast.info('Capturando landing page para análisis de color...')
       
-      // Try Microlink first
-      const microlinkUrl = `https://api.microlink.io/?url=${encodeURIComponent(targetUrl)}&screenshot=true&embed=screenshot.url`
+      // Try Microlink first with fullPage rendering and 3s delay for lazy assets
+      const microlinkUrl = `https://api.microlink.io/?url=${encodeURIComponent(targetUrl)}&screenshot=true&screenshot.fullPage=true&screenshot.waitFor=3000&embed=screenshot.url`
       
       const checkImg = new Image()
       checkImg.crossOrigin = 'anonymous'
@@ -84,8 +84,8 @@ export function ColorDetectorTab({ sectionId, onClose }: Props) {
           handleProcessImage(thumioUrl)
         }
         checkFallback.onerror = () => {
-          // Fallback to s-shot
-          const sshotUrl = `https://mini.s-shot.ru/1280x800/PNG/1280/?${targetUrl}`
+          // Fallback to s-shot (height=0 triggers full page height render)
+          const sshotUrl = `https://mini.s-shot.ru/1920x0/PNG/1920/?${targetUrl}`
           handleProcessImage(sshotUrl)
         }
       }

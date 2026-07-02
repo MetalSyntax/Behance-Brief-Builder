@@ -1,10 +1,12 @@
 import { useEffect } from 'react'
 import { useRegisterSW } from 'virtual:pwa-register/react'
 import { useToast } from './ToastProvider'
+import { useTranslation } from 'react-i18next'
 import { RefreshCw, X } from 'lucide-react'
 
 export function PWAUpdateBanner() {
   const toast = useToast()
+  const { t } = useTranslation()
   const {
     offlineReady: [offlineReady, setOfflineReady],
     needRefresh:  [needRefresh,  setNeedRefresh],
@@ -14,9 +16,9 @@ export function PWAUpdateBanner() {
   // One-shot toast when the app is cached for offline use
   useEffect(() => {
     if (!offlineReady) return
-    toast.success('BeBrief listo para usar sin conexión.')
+    toast.success(t('pwa.offlineReady'))
     setOfflineReady(false)
-  }, [offlineReady, toast, setOfflineReady])
+  }, [offlineReady, toast, setOfflineReady, t])
 
   if (!needRefresh) return null
 
@@ -36,7 +38,7 @@ export function PWAUpdateBanner() {
       <RefreshCw size={15} className="text-violet-400 shrink-0" />
 
       <span className="text-zinc-200">
-        Nueva versión disponible
+        {t('pwa.updateAvailable')}
       </span>
 
       <button
@@ -47,12 +49,12 @@ export function PWAUpdateBanner() {
           'transition-colors shrink-0',
         ].join(' ')}
       >
-        Actualizar
+        {t('pwa.update')}
       </button>
 
       <button
         onClick={() => setNeedRefresh(false)}
-        aria-label="Cerrar notificación"
+        aria-label={t('pwa.dismiss')}
         className="p-1 rounded-lg text-zinc-500 hover:text-zinc-300 transition-colors shrink-0"
       >
         <X size={13} />

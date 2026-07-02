@@ -185,5 +185,11 @@
       "canvas": "Canvas",
       "inspector": "Properties"
     }
+  },
+  "pwa": {
+    "offlineReady": "BeBrief is ready to use offline.",
+    "updateAvailable": "New version available",
+    "update": "Update",
+    "dismiss": "Dismiss notification"
   }
 }
