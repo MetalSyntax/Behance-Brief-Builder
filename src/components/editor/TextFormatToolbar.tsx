@@ -48,15 +48,29 @@ export function TextFormatToolbar() {
     if (!editableElement) return
 
     const activeSection = project.sections.find(s => s.id === activeSectionId)
-    if (!activeSection) return
+    if (!activeSection || activeSection.type === 'footer') return
 
     const tagName = editableElement.tagName.toLowerCase()
+    
     const isTitle = 
       tagName === 'h1' || 
       tagName === 'h2' || 
-      tagName === 'h3' || 
-      editableElement.className.includes('title') || 
+      (tagName === 'h3' && editableElement.className.includes('title')) ||
+      editableElement.className.includes('section-title') || 
       editableElement.style.fontFamily.includes('var(--font-display)')
+
+    const isDescription = 
+      tagName === 'p' && (
+        editableElement.className.includes('description') ||
+        editableElement.className.includes('subtitle') ||
+        editableElement.className.includes('opacity-80') ||
+        editableElement.className.includes('opacity-85') ||
+        editableElement.className.includes('opacity-90') ||
+        editableElement.className.includes('opacity-95') ||
+        editableElement.className.includes('opacity-75') ||
+        editableElement.className.includes('font-light') ||
+        editableElement.style.fontFamily.includes('var(--font-body)')
+      )
 
     // Standard scales
     const titleSizes = ['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl', 'display']
@@ -70,7 +84,7 @@ export function TextFormatToolbar() {
       if (direction === 'increase' && newIdx < titleSizes.length - 1) newIdx++
       if (direction === 'decrease' && newIdx > 0) newIdx--
       updateSectionStyle(activeSectionId, { titleSize: titleSizes[newIdx] })
-    } else {
+    } else if (isDescription) {
       // It is a subtitle or description
       const currentSize = activeSection.style.subtitleSize || 'lg'
       let newIdx = subtitleSizes.indexOf(currentSize)
